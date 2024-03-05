@@ -32,7 +32,7 @@ export default function UpvoteWrapper() {
       <ul className="flex flex-col items-start justify-stretch gap-4">
         {listItem.map((item) => (
           <li key={item.id} className="w-full">
-            <UpvoteList />
+            <UpvoteList id={item.id} />
           </li>
         ))}
       </ul>
