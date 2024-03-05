@@ -1,8 +1,31 @@
+import { useEffect } from "react";
 import { useListStore } from "../../store/ListStore";
 import UpvoteList from "./UpvoteList";
 
 export default function UpvoteWrapper() {
-  const { listItem, addListItem } = useListStore();
+  const { listItem, setListItem } = useListStore();
+
+  useEffect(() => {
+    //Add initial 3 list items if not defined
+
+    const localStorageItems = JSON.parse(
+      localStorage.getItem("listItem") || '""',
+    );
+
+    if (localStorageItems !== "") {
+      localStorageItems.map((item: UpvoteList) => {
+        setListItem(item);
+      });
+    } else {
+      for (let i = 0; i < 3; i++) {
+        setListItem(undefined);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("listItem", JSON.stringify(listItem));
+  }, [listItem]);
 
   return (
     <section className="min-w-[380px] rounded bg-white p-6 shadow">
@@ -17,7 +40,7 @@ export default function UpvoteWrapper() {
 
       <button
         className="mt-8 rounded bg-slate-400 px-5 py-2 font-bold text-white transition hover:bg-slate-600"
-        onClick={() => addListItem()}
+        onClick={() => setListItem(undefined)}
       >
         Add New List
       </button>
