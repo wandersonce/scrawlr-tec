@@ -6,13 +6,12 @@ export default function UpvoteWrapper() {
   const { listItem, setListItem } = useListStore();
 
   useEffect(() => {
-    //Add initial 3 list items if not defined
-
+    //Add initial 3 list items if not defined on localStorage
     const localStorageItems = JSON.parse(
       localStorage.getItem("listItem") || '""',
     );
 
-    if (localStorageItems !== "") {
+    if (localStorageItems.length !== 0) {
       localStorageItems.map((item: UpvoteList) => {
         setListItem(item);
       });
@@ -28,18 +27,18 @@ export default function UpvoteWrapper() {
   }, [listItem]);
 
   return (
-    <section className="min-w-[380px] rounded bg-white p-6 shadow">
+    <section className="w-[600px] rounded bg-white p-6 shadow">
       <h3 className="mb-2 text-xl font-bold">UpVote List</h3>
-      <ul className="flex flex-col items-start justify-stretch">
+      <ul className="flex flex-col items-start justify-stretch gap-4">
         {listItem.map((item) => (
-          <li key={item.id}>
+          <li key={item.id} className="w-full">
             <UpvoteList />
           </li>
         ))}
       </ul>
 
       <button
-        className="mt-8 rounded bg-slate-400 px-5 py-2 font-bold text-white transition hover:bg-slate-600"
+        className="mt-8 rounded bg-slate-600 px-5 py-2 font-bold text-white transition hover:bg-slate-500"
         onClick={() => setListItem(undefined)}
       >
         Add New List
