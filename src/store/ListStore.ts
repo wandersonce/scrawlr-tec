@@ -5,6 +5,7 @@ interface ListState {
   listItem: UpvoteList[];
   setListItem: (item: UpvoteList | undefined) => void;
   addUpvote: (upVoteItem: ListItem, id: string) => void;
+  toggleSelected: (id: string) => void;
 }
 
 interface UpVoteItem {
@@ -32,6 +33,29 @@ export const useListStore = create<ListState>((set) => ({
         list.id === id
           ? { ...list, upvotes: [...list.upvotes, upVoteItem] }
           : list,
+      ),
+    }));
+  },
+  toggleSelected: (id: string) => {
+    set((state) => ({
+      listItem: state.listItem.map((list) =>
+        list.id === id
+          ? {
+              ...list,
+              selected: true,
+              upvotes: list.upvotes.map((item) => ({
+                ...item,
+                selected: true,
+              })),
+            }
+          : {
+              ...list,
+              selected: false,
+              upvotes: list.upvotes.map((item) => ({
+                ...item,
+                selected: false,
+              })),
+            },
       ),
     }));
   },
