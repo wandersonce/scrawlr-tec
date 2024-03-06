@@ -26,12 +26,13 @@ export default function UpvoteWrapper() {
     localStorage.setItem("listItem", JSON.stringify(listItem));
   }, [listItem]);
 
+  console.log(listItem);
   return (
     <section className="w-[600px] rounded bg-white p-6 shadow">
       <h3 className="mb-2 text-xl font-bold">UpVote List</h3>
       <ul className="flex flex-col items-start justify-stretch gap-4">
         {listItem.map((item) => (
-          <li key={item.id} className="w-full">
+          <li key={item.id} data-key={item.id} className="w-full">
             <UpvoteList id={item.id} />
           </li>
         ))}

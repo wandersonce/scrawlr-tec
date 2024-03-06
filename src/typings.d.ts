@@ -1,9 +1,11 @@
 interface UpvoteList {
-  id: string;
+  id?: string;
+  upvotes?: [ListItem] | [];
   selected: boolean;
 }
 
 interface ListItem {
-  id: string;
+  id?: string;
+  parentId?: string;
   selected: boolean;
 }
