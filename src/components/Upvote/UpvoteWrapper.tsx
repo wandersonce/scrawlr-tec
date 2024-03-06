@@ -12,7 +12,7 @@ export default function UpvoteWrapper() {
     const localStorageItems = JSON.parse(
       localStorage.getItem("listItem") || '""',
     );
-
+    //check local storage and add state if exists
     if (localStorageItems.length !== 0) {
       localStorageItems.map((item: UpvoteList) => {
         setListItem(item);
@@ -25,6 +25,7 @@ export default function UpvoteWrapper() {
   }, []);
 
   useEffect(() => {
+    //set the new item in the local storage every time that the listItem is updated
     localStorage.setItem("listItem", JSON.stringify(listItem));
   }, [listItem]);
 
@@ -33,7 +34,7 @@ export default function UpvoteWrapper() {
       <h3 className="mb-2 text-xl font-bold">UpVote List</h3>
       <ul className="flex flex-col items-start justify-stretch gap-4">
         {listItem.map((item) => (
-          <li key={item.id} data-key={item.id} className="w-full">
+          <li key={item.id} className="w-full">
             <UpvoteList id={item.id} upvotes={item.upvotes} />
           </li>
         ))}

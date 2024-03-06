@@ -13,16 +13,20 @@ interface UpvoteListProps {
 export default function UpvoteList({ id, upvotes }: UpvoteListProps) {
   const { addUpvote, toggleSelected } = useListStore();
 
+  //Handle the + button action
   const handleAddItem = () => {
+    //Generate a new unique item
     const newItem = {
       id: uuidv4(),
       parentId: id,
       selected: false,
     };
 
+    //Add the new item to the list of items in state
     addUpvote(newItem, id!);
   };
 
+  //Handle the click in each item to change the selected state
   const handleToggleSelected = () => {
     toggleSelected(id!);
   };
