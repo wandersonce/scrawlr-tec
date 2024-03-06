@@ -12,7 +12,7 @@ interface UpVoteItem {
   setUpvoteItem: (ListItem: UpvoteList | undefined) => void;
 }
 
-export const useListStore = create<ListState>((set, get) => ({
+export const useListStore = create<ListState>((set) => ({
   listItem: [],
   setListItem: (item: UpvoteList | undefined) => {
     set((state) => ({

@@ -1,6 +1,6 @@
 interface UpvoteList {
   id?: string;
-  upvotes?: [ListItem] | [];
+  upvotes: ListItem[];
   selected: boolean;
 }
 
