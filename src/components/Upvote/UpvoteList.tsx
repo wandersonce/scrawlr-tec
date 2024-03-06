@@ -21,7 +21,7 @@ export default function UpvoteList({ id }: UpvoteListProps) {
       selected: false,
     };
     // setUpvoteItem(newItem);
-    addUpvote(newItem);
+    addUpvote(newItem, id);
   };
 
   return (

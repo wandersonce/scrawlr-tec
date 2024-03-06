@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 interface ListState {
   listItem: UpvoteList[];
   setListItem: (item: UpvoteList | undefined) => void;
-  addUpvote: (upVoteItem: ListItem) => void;
+  addUpvote: (upVoteItem: ListItem, id: string) => void;
 }
 
 interface UpVoteItem {
@@ -26,8 +26,14 @@ export const useListStore = create<ListState>((set, get) => ({
       ],
     }));
   },
-  addUpvote: (upVoteItem: ListItem) => {
-    console.log("here");
+  addUpvote: (upVoteItem: ListItem, id) => {
+    set((state) => ({
+      listItem: state.listItem.map((list) =>
+        upVoteItem.parentId === id
+          ? { ...list, upvotes: [...list.upvotes, upVoteItem] }
+          : list,
+      ),
+    }));
   },
 }));
 
