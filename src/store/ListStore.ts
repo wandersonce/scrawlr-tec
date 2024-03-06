@@ -8,11 +8,6 @@ interface ListState {
   toggleSelected: (id: string) => void;
 }
 
-interface UpVoteItem {
-  upvoteItem: ListItem[];
-  setUpvoteItem: (ListItem: ListItem | undefined) => void;
-}
-
 export const useListStore = create<ListState>((set) => ({
   listItem: [],
   setListItem: (item: UpvoteList | undefined) => {
@@ -63,22 +58,6 @@ export const useListStore = create<ListState>((set) => ({
               })),
             },
       ),
-    }));
-  },
-}));
-
-export const useUpvoteItem = create<UpVoteItem>((set) => ({
-  upvoteItem: [],
-  setUpvoteItem: (item: ListItem | undefined) => {
-    set((state) => ({
-      upvoteItem: [
-        ...state.upvoteItem,
-        {
-          id: item == undefined ? item!.id : uuidv4(),
-          parentId: item?.parentId ? item.parentId : "",
-          selected: item?.selected ? item.selected : false,
-        },
-      ],
     }));
   },
 }));
