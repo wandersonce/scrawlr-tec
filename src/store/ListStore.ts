@@ -27,13 +27,19 @@ export const useListStore = create<ListState>((set) => ({
       ],
     }));
   },
-  addUpvote: (upVoteItem: ListItem, id) => {
+  addUpvote: (upVoteItem: ListItem, id: string) => {
     set((state) => ({
-      listItem: state.listItem.map((list) =>
-        list.id === id
-          ? { ...list, upvotes: [...list.upvotes, upVoteItem] }
-          : list,
-      ),
+      listItem: state.listItem.map((list) => ({
+        ...list,
+        selected: list.id === id ? true : false, // Set selected based on id
+        upvotes:
+          list.id === id
+            ? [
+                ...list.upvotes.map((item) => ({ ...item, selected: true })),
+                { ...upVoteItem, selected: true },
+              ] // Add new item, set upvotes to true
+            : list.upvotes.map((item) => ({ ...item, selected: false })), // Reset selection in other lists' upvotes
+      })),
     }));
   },
   toggleSelected: (id: string) => {

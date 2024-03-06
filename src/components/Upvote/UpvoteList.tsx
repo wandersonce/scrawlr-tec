@@ -37,7 +37,7 @@ export default function UpvoteList({ id, upvotes }: UpvoteListProps) {
             onClick={() => handleToggleSelected()}
             className="cursor-pointer"
           >
-            <VoteItem />
+            <VoteItem selected={item.selected} />
           </li>
         ))}
       </ul>

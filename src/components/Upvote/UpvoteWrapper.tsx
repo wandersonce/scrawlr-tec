@@ -28,7 +28,6 @@ export default function UpvoteWrapper() {
     localStorage.setItem("listItem", JSON.stringify(listItem));
   }, [listItem]);
 
-  console.log(listItem);
   return (
     <section className="w-[600px] rounded bg-white p-6 shadow">
       <h3 className="mb-2 text-xl font-bold">UpVote List</h3>
