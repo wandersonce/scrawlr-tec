@@ -9,7 +9,7 @@ interface ListState {
 
 interface UpVoteItem {
   upvoteItem: ListItem[];
-  setUpvoteItem: (ListItem: UpvoteList | undefined) => void;
+  setUpvoteItem: (ListItem: ListItem | undefined) => void;
 }
 
 export const useListStore = create<ListState>((set) => ({
@@ -29,7 +29,7 @@ export const useListStore = create<ListState>((set) => ({
   addUpvote: (upVoteItem: ListItem, id) => {
     set((state) => ({
       listItem: state.listItem.map((list) =>
-        upVoteItem.parentId === id
+        list.id === id
           ? { ...list, upvotes: [...list.upvotes, upVoteItem] }
           : list,
       ),

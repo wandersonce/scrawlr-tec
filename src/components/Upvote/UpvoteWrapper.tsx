@@ -1,5 +1,7 @@
 import { useEffect } from "react";
+
 import { useListStore } from "../../store/ListStore";
+
 import UpvoteList from "./UpvoteList";
 
 export default function UpvoteWrapper() {
@@ -33,7 +35,7 @@ export default function UpvoteWrapper() {
       <ul className="flex flex-col items-start justify-stretch gap-4">
         {listItem.map((item) => (
           <li key={item.id} data-key={item.id} className="w-full">
-            <UpvoteList id={item.id} />
+            <UpvoteList id={item.id} upvotes={item.upvotes} />
           </li>
         ))}
       </ul>

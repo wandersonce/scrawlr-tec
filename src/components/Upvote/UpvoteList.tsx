@@ -1,40 +1,35 @@
-import { useEffect } from "react";
+import { v4 as uuidv4 } from "uuid";
+
+import { useListStore } from "../../store/ListStore";
 
 import PlusIcon from "../Icons/PlusIcon";
 import VoteItem from "./VoteItem";
-import { useListStore, useUpvoteItem } from "../../store/ListStore";
 
 interface UpvoteListProps {
   id?: string;
+  upvotes: ListItem[];
 }
 
-export default function UpvoteList({ id }: UpvoteListProps) {
-  const { upvoteItem, setUpvoteItem } = useUpvoteItem();
+export default function UpvoteList({ id, upvotes }: UpvoteListProps) {
   const { addUpvote } = useListStore();
-
-  useEffect(() => {}, []);
 
   const handleAddItem = () => {
     const newItem = {
-      id: undefined,
+      id: uuidv4(),
       parentId: id,
       selected: false,
     };
-    // setUpvoteItem(newItem);
-    addUpvote(newItem, id);
+
+    addUpvote(newItem, id!);
   };
 
   return (
     <div className="flex  items-center justify-between gap-2">
       <ul className="flex min-h-16 w-full flex-wrap gap-2 rounded border border-slate-600 p-1 shadow-sm">
-        {upvoteItem.map((item) => (
-          <>
-            {item.parentId === id ? (
-              <li key={item.id} data-key={id} className="cursor-pointer">
-                <VoteItem />
-              </li>
-            ) : null}
-          </>
+        {upvotes.map((item) => (
+          <li key={item.id} data-key={id} className="cursor-pointer">
+            <VoteItem />
+          </li>
         ))}
       </ul>
       <button
