@@ -1,55 +1,26 @@
-import { render, screen, fireEvent } from "@testing-library/react";
-import UpvoteList from "../components/Upvote/UpvoteList";
+import { render, screen, test, expect } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import jest from "jest";
 import { useListStore } from "../store/ListStore";
+import UpvoteList from "../components/UpvoteList/UpvoteList";
 
+jest.mock("../store/ListStore");
 
-jest.mock('./useListStore', () => ({
-  useListStore: jest.fn().mockReturnValue({
-    listItem: [
-      {
-        id: 'list1',
-        selected: false,
-        upvotes: [
-          { id: 1, content: 'Upvote 1', selected: false },
-          { id: 2, content: 'Upvote 2', selected: false },
-        ],
-      },
-      {
-        id: 'list2',
-        selected: false,
-        upvotes: [
-          { id: 3, content: 'Upvote 3', selected: false },
-          { id: 4, content: 'Upvote 4', selected: false },
-        ],
-      },
-    ],
-  }),
-}));
+test("clicking the add button updates the selected state in the store", () => {
+  const initialUpvotes = [{ id: "item1", selected: false }];
+  const listId = "list1";
 
-test('clicking on an upvote item in a list sets its selected state to true and resets other lists and their upvotes', () => {
-  // Render the UpvoteList component
-  render(<UpvoteList />);
+  render(<UpvoteList id={listId} upvotes={initialUpvotes} />);
 
-  // Find the first upvote item (adjust selector based on your component)
-  const firstUpvoteItem = screen.getByText('Upvote 1');
+  const button = screen.getByRole("button", { name: /add/i });
+  userEvent.click(button);
 
-  // Simulate clicking on the upvote item
-  fireEvent.click(firstUpvoteItem);
+  const mockedUseListStore =
+    jest.requireActual("../store/ListStore").useListStore;
+  const listStore = mockedUseListStore();
 
-  // Directly call the mocked addUpvote function with correct arguments
-  (useListStore as any).mockReturnValue.addUpvote({ id: 1, content: 'Upvote 1' }, 'list1');
-
-  // Get all upvote items in the first and second lists (adjust selectors)
-  const firstListUpvotes = screen.getAllByText(/Upvote [1-2]/);
-  const secondListUpvotes = screen.getAllByText(/Upvote [3-4]/);
-
-  // Adjust assertions based on your component's rendering of "selected" state
-  // Example using class name:
-  firstListUpvotes.forEach((item) => {
-    expect(item.classList.contains('selected')).toBe(true);
-  });
-
-  secondListUpvotes.forEach((item) => {
-    expect(item.classList.contains('selected')).toBe(false);
-  });
+  expect(listStore.listItem).toEqual([
+    ...initialUpvotes,
+    { id: expect.any(String), parentId: listId, selected: true },
+  ]);
 });
