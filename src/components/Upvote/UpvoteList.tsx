@@ -30,7 +30,7 @@ export default function UpvoteList({ id, upvotes }: UpvoteListProps) {
   const handleToggleSelected = () => {
     toggleSelected(id!);
   };
-  console.log(upvotes);
+
   return (
     <div className="flex  items-center justify-between gap-2">
       <ul className="flex min-h-16 w-full flex-wrap gap-2 rounded border border-slate-600 p-1 shadow-sm">
